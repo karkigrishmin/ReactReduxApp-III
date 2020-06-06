@@ -2,9 +2,11 @@ import React from "react";
 
 class GoogleAuth extends React.Component {
   state = { isSignedIn: null };
-
+  //lifecycle method, which gets called after the rendering of our component
   componentDidMount() {
+    //arrows function gets called after this library is successfully loaded up
     window.gapi.load("client:auth2", () => {
+      //initialization, it returns a promise
       window.gapi.client
         .init({
           clientId:
@@ -24,11 +26,11 @@ class GoogleAuth extends React.Component {
   };
 
   //eventHandler
-  onSignIn = () => {
+  onSignInClick = () => {
     this.auth.signIn();
   };
 
-  onSignOut = () => {
+  onSignOutClick = () => {
     this.auth.signOut();
   };
 
@@ -37,14 +39,14 @@ class GoogleAuth extends React.Component {
       return null;
     } else if (this.state.isSignedIn) {
       return (
-        <button onClick={this.onSignOut} className="ui red google button">
+        <button onClick={this.onSignOutClick} className="ui red google button">
           <i className="google icon" />
           Sign Out
         </button>
       );
     } else {
       return (
-        <button onClick={this.onSignIn} className="ui red google button">
+        <button onClick={this.onSignInClick} className="ui red google button">
           <i className="google icon" />
           Sign In with Google
         </button>
