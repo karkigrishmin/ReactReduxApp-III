@@ -1,16 +1,28 @@
 import React from "react";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, touch } from "redux-form";
 
 class StreamCreate extends React.Component {
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="ui error message">
+          <div className="header">{error}</div>
+        </div>
+      );
+    }
+  }
+
   //destructuring
-  renderInput({ input, label }) {
+  renderInput = ({ input, label, meta }) => {
+    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
-      <div>
+      <div className={className}>
         <label>{label}</label>
-        <input {...input} />
+        <input {...input} autoComplete="off" />
+        {this.renderError(meta)}
       </div>
     );
-  }
+  };
 
   onSubmit(formValues) {
     console.log(formValues);
@@ -20,7 +32,7 @@ class StreamCreate extends React.Component {
     return (
       <form
         onSubmit={this.props.handleSubmit(this.onSubmit)}
-        className="ui form"
+        className="ui form error"
       >
         <Field name="title" component={this.renderInput} label="Enter Title" />
         <Field
@@ -28,14 +40,14 @@ class StreamCreate extends React.Component {
           component={this.renderInput}
           label="Enter Description"
         />
-        <div style={{ marginTop: "1rem" }}>
-          <button className="ui button primary">Submit</button>
-        </div>
+
+        <button className="ui button primary">Submit</button>
       </form>
     );
   }
 }
 
+//this function gets called with all values of inputs
 const validate = (formValues) => {
   const errors = {};
 
@@ -53,4 +65,5 @@ const validate = (formValues) => {
 //reduxForm is like a connect function but this function only takes single object as an argument
 export default reduxForm({
   form: "streamCreate",
+  validate: validate,
 })(StreamCreate);
