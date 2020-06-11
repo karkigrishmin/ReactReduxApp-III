@@ -1,5 +1,7 @@
 import React from "react";
-import { Field, reduxForm, touch } from "redux-form";
+import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import { createStream } from "../../actions";
 
 class StreamCreate extends React.Component {
   renderError({ error, touched }) {
@@ -25,7 +27,7 @@ class StreamCreate extends React.Component {
   };
 
   onSubmit(formValues) {
-    console.log(formValues);
+    this.props.createStream(formValues);
   }
 
   render() {
@@ -63,7 +65,9 @@ const validate = (formValues) => {
 };
 
 //reduxForm is like a connect function but this function only takes single object as an argument
-export default reduxForm({
+const fromWrapped = reduxForm({
   form: "streamCreate",
   validate: validate,
 })(StreamCreate);
+
+export default connect(null, { createStream })(fromWrapped);
