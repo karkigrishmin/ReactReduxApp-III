@@ -22,6 +22,7 @@ export const signOut = () => {
   };
 };
 
+//creating stream
 export const createStream = (formValues) => async (dispatch) => {
   //making post request with  the streams end point
   const response = await streams.post("/streams", formValues);
@@ -29,6 +30,7 @@ export const createStream = (formValues) => async (dispatch) => {
   dispatch({ type: CREATE_STREAM, payload: response.data });
 };
 
+//fetching list of streams
 export const fetchStreams = () => {
   return async (dispatch) => {
     const response = await streams.get("/streams");
@@ -37,6 +39,7 @@ export const fetchStreams = () => {
   };
 };
 
+//fetching a particular stream with its id
 export const fetchStream = (id) => {
   return async (dispatch) => {
     const response = await streams.get(`/streams/${id}`);
@@ -45,6 +48,7 @@ export const fetchStream = (id) => {
   };
 };
 
+//editing or updating stream
 export const editStream = (id, formValues) => {
   return async (dispatch) => {
     const response = await streams.put(`/streams/${id}`, formValues);
@@ -53,6 +57,7 @@ export const editStream = (id, formValues) => {
   };
 };
 
+//deleting stream, therefore response is not returned
 export const deleteStream = (id) => {
   return async (dispatch) => {
     await streams.delete(`/streams/${id}`);
