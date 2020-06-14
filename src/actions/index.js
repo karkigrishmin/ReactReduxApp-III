@@ -23,45 +23,38 @@ export const signOut = () => {
 };
 
 //creating stream
-export const createStream = (formValues) => async (dispatch) => {
+export const createStream = (formValues) => async (dispatch, getState) => {
+  const { userId } = getState().auth;
   //making post request with  the streams end point
-  const response = await streams.post("/streams", formValues);
+  const response = await streams.post("/streams", { ...formValues, userId });
 
   dispatch({ type: CREATE_STREAM, payload: response.data });
 };
 
 //fetching list of streams
-export const fetchStreams = () => {
-  return async (dispatch) => {
-    const response = await streams.get("/streams");
+export const fetchStreams = () => async (dispatch) => {
+  const response = await streams.get("/streams");
 
-    dispatch({ type: FETCH_STREAMS, payload: response.data });
-  };
+  dispatch({ type: FETCH_STREAMS, payload: response.data });
 };
 
 //fetching a particular stream with its id
-export const fetchStream = (id) => {
-  return async (dispatch) => {
-    const response = await streams.get(`/streams/${id}`);
+export const fetchStream = (id) => async (dispatch) => {
+  const response = await streams.get(`/streams/${id}`);
 
-    dispatch({ type: FETCH_STREAM, payload: response.data });
-  };
+  dispatch({ type: FETCH_STREAM, payload: response.data });
 };
 
 //editing or updating stream
-export const editStream = (id, formValues) => {
-  return async (dispatch) => {
-    const response = await streams.put(`/streams/${id}`, formValues);
+export const editStream = (id, formValues) => async (dispatch) => {
+  const response = await streams.put(`/streams/${id}`, formValues);
 
-    dispatch({ type: EDIT_STREAM, payload: response.data });
-  };
+  dispatch({ type: EDIT_STREAM, payload: response.data });
 };
 
 //deleting stream, therefore response is not returned
-export const deleteStream = (id) => {
-  return async (dispatch) => {
-    await streams.delete(`/streams/${id}`);
+export const deleteStream = (id) => async (dispatch) => {
+  await streams.delete(`/streams/${id}`);
 
-    dispatch({ type: DELETE_STREAM, payload: id });
-  };
+  dispatch({ type: DELETE_STREAM, payload: id });
 };
