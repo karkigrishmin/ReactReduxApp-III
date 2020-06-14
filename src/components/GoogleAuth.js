@@ -25,7 +25,7 @@ class GoogleAuth extends React.Component {
   //callback,which gets called with boolean value
   onAuthChange = (isSignedIn) => {
     if (isSignedIn) {
-      this.props.signIn();
+      this.props.signIn(this.auth.currentUser.get().getId());
     } else {
       this.props.signOut();
     }
@@ -33,7 +33,7 @@ class GoogleAuth extends React.Component {
 
   //eventHandler
   onSignInClick = () => {
-    this.auth.signIn(this.auth.currentUser.get().getId());
+    this.auth.signIn();
   };
 
   onSignOutClick = () => {
