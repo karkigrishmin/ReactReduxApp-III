@@ -50,7 +50,8 @@ export const fetchStream = (id) => async (dispatch) => {
 
 //editing or updating stream
 export const editStream = (id, formValues) => async (dispatch) => {
-  const response = await streams.put(`/streams/${id}`, formValues);
+  //using patch request only the properties that are placed inside the body of request are updated
+  const response = await streams.patch(`/streams/${id}`, formValues);
 
   dispatch({ type: EDIT_STREAM, payload: response.data });
   history.push("/");
